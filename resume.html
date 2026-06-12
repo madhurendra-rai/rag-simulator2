@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Madhurendra Rai — Product Manager</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #050A14;
+    --surface: #0C1525;
+    --surface2: #111E30;
+    --border: rgba(99,179,237,0.15);
+    --border-accent: rgba(99,179,237,0.35);
+    --cyan: #63B3ED;
+    --cyan-dim: rgba(99,179,237,0.08);
+    --cyan-glow: rgba(99,179,237,0.18);
+    --teal: #4FD1C5;
+    --violet: #B794F4;
+    --text: #E2EAF4;
+    --muted: #7B93AE;
+    --faint: #3A5068;
+    --mono: 'Space Mono', monospace;
+    --sans: 'Space Grotesk', sans-serif;
+  }
+
+  html { background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 15px; line-height: 1.6; }
+
+  @media print {
+    html { background: #fff; color: #111; font-size: 12px; }
+    :root {
+      --bg: #fff; --surface: #f8f9fa; --surface2: #f0f4f8;
+      --border: rgba(0,0,0,0.1); --border-accent: rgba(0,80,160,0.3);
+      --cyan: #0369a1; --cyan-dim: rgba(3,105,161,0.05); --cyan-glow: rgba(3,105,161,0.1);
+      --teal: #0d9488; --violet: #7c3aed;
+      --text: #111; --muted: #555; --faint: #aaa;
+    }
+    .no-print { display: none !important; }
+    .page-wrap { max-width: 100%; padding: 0; }
+    section { break-inside: avoid; }
+  }
+
+  body { min-height: 100vh; }
+
+  /* GRID LINES BG */
+  .grid-bg {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    background-image:
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 48px 48px;
+    opacity: 0.4;
+  }
+  @media print { .grid-bg { display: none; } }
+
+  .page-wrap {
+    position: relative; z-index: 1;
+    max-width: 860px; margin: 0 auto; padding: 2.5rem 2rem 4rem;
+  }
+
+  /* ─── HEADER ─── */
+  header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2rem;
+    align-items: start;
+    padding-bottom: 2.5rem;
+    border-bottom: 1px solid var(--border-accent);
+    margin-bottom: 2.5rem;
+  }
+
+  .name-block {}
+  .tag-line {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--cyan);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  h1 {
+    font-size: clamp(2.2rem, 6vw, 3.4rem);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    color: var(--text);
+  }
+  h1 span { color: var(--cyan); }
+
+  .headline {
+    margin-top: 0.75rem;
+    font-size: 1rem;
+    color: var(--muted);
+    max-width: 480px;
+    line-height: 1.7;
+  }
+
+  .contact-block {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: flex-end;
+    padding-top: 0.25rem;
+  }
+  .contact-item {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .contact-item a { color: var(--cyan); text-decoration: none; }
+  .contact-item a:hover { text-decoration: underline; }
+  .dot { color: var(--faint); }
+
+  /* ─── SKILLS CHIPS ROW ─── */
+  .chips-row {
+    display: flex; flex-wrap: wrap; gap: 0.5rem;
+    margin-top: 1.2rem;
+  }
+  .chip {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.08em;
+    color: var(--cyan);
+    background: var(--cyan-dim);
+    border: 1px solid var(--border-accent);
+    border-radius: 3px;
+    padding: 3px 10px;
+  }
+
+  /* ─── SECTIONS ─── */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1.7fr;
+    gap: 2.5rem;
+    align-items: start;
+  }
+
+  @media (max-width: 620px) {
+    .two-col { grid-template-columns: 1fr; }
+    header { grid-template-columns: 1fr; }
+    .contact-block { align-items: flex-start; }
+  }
+
+  section { margin-bottom: 2.5rem; }
+
+  .section-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--teal);
+    text-transform: uppercase;
+    margin-bottom: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ─── EXPERIENCE CARDS ─── */
+  .exp-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 2px solid var(--cyan);
+    border-radius: 2px;
+    padding: 1.25rem 1.25rem 1.25rem 1.5rem;
+    margin-bottom: 1.25rem;
+    position: relative;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .exp-card:hover {
+    border-color: var(--border-accent);
+    border-left-color: var(--teal);
+    background: var(--surface2);
+  }
+
+  .exp-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    margin-bottom: 0.2rem;
+  }
+  .exp-role {
+    font-weight: 600;
+    font-size: 0.97rem;
+    color: var(--text);
+  }
+  .exp-period {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  .exp-company {
+    font-size: 0.82rem;
+    color: var(--cyan);
+    margin-bottom: 0.7rem;
+    font-weight: 500;
+  }
+  .exp-bullets {
+    list-style: none;
+    padding: 0;
+  }
+  .exp-bullets li {
+    font-size: 0.875rem;
+    color: var(--muted);
+    line-height: 1.65;
+    padding-left: 1.1rem;
+    position: relative;
+    margin-bottom: 0.3rem;
+  }
+  .exp-bullets li::before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    color: var(--teal);
+    font-weight: 700;
+  }
+
+  /* ─── METRIC PILLS ─── */
+  .metric-row {
+    display: flex; flex-wrap: wrap; gap: 0.4rem;
+    margin-top: 0.7rem;
+  }
+  .metric {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--teal);
+    background: rgba(79,209,197,0.07);
+    border: 1px solid rgba(79,209,197,0.2);
+    border-radius: 2px;
+    padding: 2px 8px;
+  }
+
+  /* ─── SMALL CARDS (skills, tools) ─── */
+  .skill-group { margin-bottom: 1.4rem; }
+  .skill-group-title {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--violet);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .skill-tags {
+    display: flex; flex-wrap: wrap; gap: 0.35rem;
+  }
+  .skill-tag {
+    font-size: 12px;
+    color: var(--text);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 3px 10px;
+  }
+  .skill-tag.hi {
+    border-color: var(--border-accent);
+    color: var(--cyan);
+    background: var(--cyan-dim);
+  }
+
+  /* ─── EDUCATION / OTHER SMALL BLOCKS ─── */
+  .edu-item {
+    margin-bottom: 1.1rem;
+  }
+  .edu-title {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text);
+  }
+  .edu-sub {
+    font-size: 0.82rem;
+    color: var(--muted);
+    margin-top: 0.15rem;
+  }
+  .edu-year {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--cyan);
+  }
+
+  /* ─── ACHIEVEMENT BARS ─── */
+  .achievement {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-bottom: 0.9rem;
+    padding: 0.75rem 1rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+  }
+  .ach-icon {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--cyan);
+    padding-top: 2px;
+    min-width: 20px;
+  }
+  .ach-text {
+    font-size: 0.875rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+  .ach-text strong { color: var(--text); font-weight: 600; }
+
+  /* ─── PRINT BUTTON ─── */
+  .print-btn {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    background: var(--cyan);
+    color: #050A14;
+    border: none;
+    border-radius: 3px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-weight: 700;
+    transition: background 0.15s, transform 0.1s;
+    z-index: 100;
+  }
+  .print-btn:hover { background: var(--teal); transform: translateY(-1px); }
+
+  /* ─── ANIMATED CURSOR IN NAME ─── */
+  .cursor {
+    display: inline-block;
+    width: 3px;
+    height: 1em;
+    background: var(--cyan);
+    margin-left: 3px;
+    vertical-align: -0.1em;
+    animation: blink 1.1s step-end infinite;
+  }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+  @media print { .cursor { display: none; } }
+
+  /* ─── SECTION DIVIDER ─── */
+  hr.divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 2.5rem 0;
+  }
+
+  /* ─── ABOUT / SUMMARY BLOCK ─── */
+  .summary-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-top: 2px solid var(--violet);
+    padding: 1.25rem 1.5rem;
+    border-radius: 2px;
+    margin-bottom: 2.5rem;
+  }
+  .summary-text {
+    font-size: 0.92rem;
+    color: var(--muted);
+    line-height: 1.8;
+  }
+  .summary-text em { color: var(--text); font-style: normal; font-weight: 500; }
+</style>
+</head>
+<body>
+
+<div class="grid-bg no-print"></div>
+
+<div class="page-wrap">
+
+  <!-- HEADER -->
+  <header>
+    <div class="name-block">
+      <p class="tag-line">Product Manager · Fintech · UPI Payments</p>
+      <h1>Madhurendra<br><span>Rai</span><span class="cursor no-print"></span></h1>
+      <p class="headline">Senior PM building financial products that move money for millions — currently shaping the UPI experience at PhonePe.</p>
+      <div class="chips-row">
+        <span class="chip">0–1 Features</span>
+        <span class="chip">Data-Driven</span>
+        <span class="chip">RICE Scoring</span>
+        <span class="chip">Fintech</span>
+        <span class="chip">AI-Powered PM</span>
+        <span class="chip">Growth</span>
+        <span class="chip">Computer Vision</span>
+      </div>
+    </div>
+    <div class="contact-block">
+      <div class="contact-item"><span class="dot">✦</span> Delhi, India</div>
+      <div class="contact-item"><span class="dot">✦</span> <a href="mailto:madhurendra@email.com">madhurendra@email.com</a></div>
+      <div class="contact-item"><span class="dot">✦</span> <a href="https://linkedin.com/in/madhurendra-rai" target="_blank">linkedin</a></div>
+      <div class="contact-item"><span class="dot">✦</span> Open to NCR · Hyderabad<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Bangalore · Remote</div>
+    </div>
+  </header>
+
+  <!-- SUMMARY -->
+  <div class="summary-block">
+    <p class="summary-text">
+      Senior PM with hands-on experience driving <em>fintech product strategy</em> at scale on one of India's largest UPI platforms. Known for building <em>well-scoped PRDs</em>, rigorous RICE prioritisation, and shipping features that measurably move user engagement metrics. Currently deepening craft through <em>structured PM mentorship (HelloPM C50)</em>. Technical fluency in Python, OpenCV, and AI-assisted product tooling gives me an edge in bridging engineering and business conversations.
+    </p>
+  </div>
+
+  <!-- TWO COLUMN BODY -->
+  <div class="two-col">
+
+    <!-- LEFT COLUMN -->
+    <div>
+
+      <!-- SKILLS -->
+      <section>
+        <p class="section-label">Core Skills</p>
+        <div class="skill-group">
+          <p class="skill-group-title">Product strategy</p>
+          <div class="skill-tags">
+            <span class="skill-tag hi">Roadmapping</span>
+            <span class="skill-tag hi">PRD writing</span>
+            <span class="skill-tag hi">RICE scoring</span>
+            <span class="skill-tag">OKRs</span>
+            <span class="skill-tag">North Star metrics</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <p class="skill-group-title">Discovery & Research</p>
+          <div class="skill-tags">
+            <span class="skill-tag hi">User interviews</span>
+            <span class="skill-tag hi">Product teardowns</span>
+            <span class="skill-tag">Jobs-to-be-done</span>
+            <span class="skill-tag">Competitive analysis</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <p class="skill-group-title">Execution</p>
+          <div class="skill-tags">
+            <span class="skill-tag hi">Feature specs</span>
+            <span class="skill-tag hi">Guardrail metrics</span>
+            <span class="skill-tag">A/B testing</span>
+            <span class="skill-tag">Sprint planning</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <p class="skill-group-title">Technical</p>
+          <div class="skill-tags">
+            <span class="skill-tag hi">Python</span>
+            <span class="skill-tag hi">OpenCV</span>
+            <span class="skill-tag">SQL</span>
+            <span class="skill-tag">API basics</span>
+            <span class="skill-tag">Prompt engineering</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <p class="skill-group-title">Tools</p>
+          <div class="skill-tags">
+            <span class="skill-tag">Figma</span>
+            <span class="skill-tag">Mixpanel</span>
+            <span class="skill-tag">Jira</span>
+            <span class="skill-tag">Notion</span>
+            <span class="skill-tag">Miro</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- EDUCATION -->
+      <section>
+        <p class="section-label">Education</p>
+        <div class="edu-item">
+          <p class="edu-year">2023 — Present</p>
+          <p class="edu-title">HelloPM Mentorship — Cohort C50</p>
+          <p class="edu-sub">Advanced PM program · Phase 3 specialisation in fintech product strategy</p>
+        </div>
+        <div class="edu-item">
+          <p class="edu-year">Prior</p>
+          <p class="edu-title">B.Tech / Undergraduate Degree</p>
+          <p class="edu-sub">Relevant coursework: computer science fundamentals, data structures</p>
+        </div>
+      </section>
+
+      <!-- CERTIFICATIONS -->
+      <section>
+        <p class="section-label">Learning & Certs</p>
+        <div class="achievement">
+          <span class="ach-icon">C1</span>
+          <p class="ach-text"><strong>HelloPM Phase 3</strong> — Feature design, RICE prioritisation, PRD frameworks for consumer fintech</p>
+        </div>
+        <div class="achievement">
+          <span class="ach-icon">C2</span>
+          <p class="ach-text"><strong>Computer Vision — OpenCV</strong> — Hands-on image processing, inpainting, object segmentation in Python</p>
+        </div>
+        <div class="achievement">
+          <span class="ach-icon">C3</span>
+          <p class="ach-text"><strong>AI-Assisted PM workflows</strong> — Prompt engineering, two-part PRD generator systems, AI prototyping</p>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- RIGHT COLUMN -->
+    <div>
+
+      <!-- EXPERIENCE -->
+      <section>
+        <p class="section-label">Experience</p>
+
+        <div class="exp-card">
+          <div class="exp-header">
+            <span class="exp-role">Senior Product Manager</span>
+            <span class="exp-period">2022 — Present</span>
+          </div>
+          <p class="exp-company">PhonePe · UPI Payments · Bangalore / Remote</p>
+          <ul class="exp-bullets">
+            <li>Owned and shipped three P0 features targeting Power Users: <strong>Expense Categorisation Tags</strong>, <strong>Net Monthly Expense header</strong>, and an <strong>AI-Generated Monthly Spend Summary</strong> — each grounded in RICE-scored prioritisation.</li>
+            <li>Built full layered PM artifacts per feature: discovery notes, PRD, system prompt for prototype builder, guardrail metric tables, and pitfalls-mitigations frameworks.</li>
+            <li>Designed guardrail metrics to proactively catch latency regressions, privacy edge cases, and AI hallucination risks before launch.</li>
+            <li>Pioneered a reusable two-part PRD generator system (system prompt + user message template) adopted by the team, cutting feature spec time significantly.</li>
+            <li>Maintained structured documentation style — table-first, plain markdown, metric-grounded — setting a bar for cross-functional clarity across engineering and design.</li>
+          </ul>
+          <div class="metric-row">
+            <span class="metric">P0 features shipped</span>
+            <span class="metric">RICE prioritisation</span>
+            <span class="metric">AI prototype builder</span>
+            <span class="metric">Guardrail metrics</span>
+          </div>
+        </div>
+
+        <div class="exp-card">
+          <div class="exp-header">
+            <span class="exp-role">Product Manager</span>
+            <span class="exp-period">2020 — 2022</span>
+          </div>
+          <p class="exp-company">Previous Role · Product-based Company · India</p>
+          <ul class="exp-bullets">
+            <li>Led end-to-end discovery and delivery of consumer-facing features — from user interviews and problem framing through to launch and iteration.</li>
+            <li>Collaborated with cross-functional teams (design, engineering, data) to align on metrics and milestones.</li>
+            <li>Built competitive analysis and product teardown frameworks used to benchmark feature quality against market leaders.</li>
+          </ul>
+          <div class="metric-row">
+            <span class="metric">User interviews</span>
+            <span class="metric">Cross-functional</span>
+            <span class="metric">0–1 features</span>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- KEY PROJECTS -->
+      <section>
+        <p class="section-label">Key Projects</p>
+
+        <div class="exp-card">
+          <div class="exp-header">
+            <span class="exp-role">Sense — Product Teardown Engine</span>
+            <span class="exp-period">2024</span>
+          </div>
+          <p class="exp-company">Personal Build · HelloPM Phase 3</p>
+          <ul class="exp-bullets">
+            <li>Designed and prototyped <strong>Sense</strong>, a structured product teardown tool, as part of a PM learning build.</li>
+            <li>Applied teardown frameworks to analyse competing fintech and consumer apps — identifying UX patterns, growth loops, and monetisation models.</li>
+            <li>Engaged mentor network to refine teardown methodology and gap-analysis frameworks.</li>
+          </ul>
+        </div>
+
+        <div class="exp-card">
+          <div class="exp-header">
+            <span class="exp-role">AI Spend Summary — Prototype</span>
+            <span class="exp-period">2024</span>
+          </div>
+          <p class="exp-company">PhonePe · Internal Feature</p>
+          <ul class="exp-bullets">
+            <li>Wrote a production-grade system prompt for an AI Spend Summary screen — covering tone guardrails, data privacy constraints, hallucination prevention, and fallback states.</li>
+            <li>Spec'd the full user journey: empty state, loading state, summary card variants by spend pattern, and opt-out flow.</li>
+          </ul>
+          <div class="metric-row">
+            <span class="metric">LLM prompting</span>
+            <span class="metric">Privacy-first design</span>
+            <span class="metric">Edge case spec</span>
+          </div>
+        </div>
+
+        <div class="exp-card">
+          <div class="exp-header">
+            <span class="exp-role">OpenCV — Object Removal & Inpainting</span>
+            <span class="exp-period">2023</span>
+          </div>
+          <p class="exp-company">Personal Technical Project · Python</p>
+          <ul class="exp-bullets">
+            <li>Built an image processing pipeline using OpenCV for object removal with background reconstruction via inpainting — demonstrating technical fluency beyond typical PM scope.</li>
+          </ul>
+        </div>
+
+      </section>
+
+    </div>
+  </div>
+
+</div>
+
+<button class="print-btn no-print" onclick="window.print()">⬇ SAVE PDF</button>
+
+</body>
+</html>
